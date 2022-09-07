@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <title>The Great Escape Game</title>
+
+    <meta name="viewport" content="width=device-width, intital-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #eyesOpen {
+            display: none;
+        }
+
+        #output {
+            border: black 6px solid;
+            border-radius: 21px;
+            background-color: black;
+            color: lightgreen;
+            padding: 13px;
+            width: 450px;
+        }
+
+        #container {
+            width: 100%;
+            overflow: auto;
+            display: none;
+        }
+
+        #countdownClock {
+            display: none;
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 213px;
+            height: 126px;
+            padding: 10px;
+            border: 5px dashed black;
+            background-color: #8f0e20;
+            color: black;
+            text-align: center;
+            font-weight: bold;
+            background-image: url("Images/TickTock.gif");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #prison {
+            height: 950px;
+            width: 100%;
+
+        }
+
+        #description {
+            margin: auto;
+            max-width: 50%;
+            width: 450px;
+            display: none;
+            padding: 13px;
+            color:red;
+        }
+
+        .prisoner {
+            width: 312px;
+            height: 621px;
+            border: 6px white solid;
+            background-color: white;
+            border-radius: 13px;
+        }
+
+        #userInput {
+            display: none;
+            padding: 13px;
+            width: 1000px;
+            margin: auto;
+            top: 75px;
+            color: red;
+        }
+
+        .btn {
+            background-color: black;
+            border: 1px solid red;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: red;
+            outline: none;
+        }
+
+        .btn:hover {
+            border-color: black;
+            color: red;
+        }
+
+        #audio {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            width: 350px;
+            height: 150px;
+            padding: 10px;
+            border: 5px dashed black;
+            background-color: white;
+            color: black;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var txt;
+        var pos = 0;
+        var timer;
+        var te1;
+        window.addEventListener('load', function () { te1 = setInterval(openEyes, 1000); });
+
+
+        function openEyes() {
+            txt = "You wake up and you realise you are in a prison.";
+            timer = setInterval(printTimer, 100);
+            document.body.style.backgroundColor = "white";
+            document.getElementById('eyesOpen').style.display = 'initial';
+            clearInterval(te1);
+        }
+
+        function printTimer() {
+            var output = document.getElementById('output');
+            output.innerHTML += txt.charAt(pos);
+            pos++;
+
+            if (pos >= txt.length) {
+                clearInterval(timer);
+            }
+        }
+
+        var te2;
+
+        window.addEventListener('load', function () { te2 = setInterval(showLandingHideHeadline, 7500); });
+
+        function showLandingHideHeadline() {
+
+            document.getElementById('container').style.display = 'initial';
+            document.body.style.backgroundColor = "black";
+            document.getElementById('eyesOpen').style.display = 'none';
+            clearInterval(te2);
+
+        }
+
+        var te3;
+
+        window.addEventListener('load', function () { te3 = setInterval(showDescription, 10000); });
+
+        function showDescription() {
+            document.getElementById('prison').style.display = 'none';
+            document.getElementById('description').style.display = 'initial';
+            document.body.style.color = "white";
+            clearInterval(te3);
+
+        }
+
+        function showUserInput() {
+            document.getElementById('userInput').style.display = 'initial';
+            document.getElementById('countdownClock').style.display = 'initial';
+            document.getElementById('description').style.display = 'none';
+
+        }
+
+        
+
+    </script>
+
+</head>
+
+<body >
+
+    <div id="wrapper">
+
+        <div id="eyesOpen">
+            <img src="Images/Opening Eyes.jpg" alt="An Opening Eyes" id="eyes">
+            <h1 id="output"> </h1>
+        </div>
+
+        <div id="countdownClock">
+            <p> Time ticking: </p>
+            <h1> <span id="timerMinutes"> 5:</span><span id="timerSeconds">00 </span> </h1>
+        </div>
+
+        <div id="container">
+
+            <img src="Images/Prison.jpg" alt="A Prison" id="prison">
+
+            <div id="description">
+
+                <h1> Welcome to Prison Escape game </h1>
+                <p> You have been ruled to a life sentence at a maximum security prison due to gang violence and murder.
+                </p>
+                <p> You and the leader of your rival gang "Los Blancos" have been caught during your last altercation
+                    with the violent gang.</p>
+                <p> Now he is out to get you in the prison and you must escape as soon as
+                    possible. </p>
+                <p>
+                    What will end your life first, the prison or Los Blancos?
+                </p>
+
+                <button onclick="showUserInput()" class="btn"> Next </button>
+
+
+            </div>
+
+            <div id="userInput">
+
+                <div id="character">
+
+                    <fieldset>
+
+                        <legend>
+                            <h2> Character Selection </h2>
+                        </legend>
+
+                        <label for="userName">
+                            <p> Please enter your username in below:* </p>
+                        </label>
+                        <input type="text" name="name" id="userName" required="required">
+
+                        <br />
+                        <hr />
+                        <br />
+
+                        <p> Please select your character in below:* </p>
+
+                        <input type="radio" name="characterSelect" id="male" value="male" checked required="required">
+                        <label for="male"> Male </label>
+                        <img src="Images/Prisoner1.png" alt="Male Prisoner" class="prisoner">
+
+                        <img src="Images/Prisoner3.png" alt="Female Prisoner" class="prisoner">
+                        <input type="radio" name="characterSelect" id="female" value="female" required="required">
+                        <label for="female"> Female </label>
+
+                        <br />
+                        <hr />
+                        <br />
+
+                        <a href="page2.html"> <button class="btn">Start Game</button> </a>
+
+                        <br />
+                        <br />
+
+                    </fieldset>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
